@@ -108,23 +108,6 @@ export default function LoginPage() {
               {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </button>
           </form>
-
-          {/* Demo Credentials */}
-          <div className="mt-8 pt-6 border-t border-olive-100">
-            <p className="text-xs text-olive-600 text-center mb-3">
-              <strong>Credenciales de Demo:</strong>
-            </p>
-            <div className="space-y-2 text-xs text-olive-600">
-              <div className="flex justify-between items-center p-2 bg-olive-50 rounded">
-                <span className="font-medium">Trabajador:</span>
-                <code className="font-mono">worker@demo.com / worker123</code>
-              </div>
-              <div className="flex justify-between items-center p-2 bg-olive-50 rounded">
-                <span className="font-medium">Admin:</span>
-                <code className="font-mono">admin@demo.com / admin123</code>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Footer */}
