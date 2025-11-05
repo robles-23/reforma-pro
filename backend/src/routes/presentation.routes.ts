@@ -32,7 +32,7 @@ router.get('/:token', async (req: Request, res: Response) => {
  * POST /api/v1/presentations/:token/analytics
  * Track analytics event for presentation
  */
-router.post('/:token/analytics', async (req: Request, res: Response) => {
+router.post('/:token/analytics', async (req: Request, res: Response): Promise<any> => {
   try {
     const { token } = req.params;
     const { eventType, metadata } = req.body;

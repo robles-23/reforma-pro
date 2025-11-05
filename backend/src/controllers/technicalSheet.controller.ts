@@ -7,7 +7,7 @@ export class TechnicalSheetController {
   /**
    * Upload technical sheet PDFs
    */
-  async upload(req: Request, res: Response) {
+  async upload(req: Request, res: Response): Promise<any> {
     try {
       const { projectId } = req.params;
       const user = req.user!;
@@ -128,7 +128,6 @@ export class TechnicalSheetController {
   async delete(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const user = req.user!;
 
       // Verify user has access (through project)
       // TODO: Add authorization check

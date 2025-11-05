@@ -84,7 +84,7 @@ Por favor, transforma esta descripción en un texto profesional y atractivo para
   /**
    * Analyze images (optional - future feature)
    */
-  async analyzeImages(imageUrls: string[]): Promise<string> {
+  async analyzeImages(_imageUrls: string[]): Promise<string> {
     try {
       // This would use Claude Vision to analyze renovation images
       // For Phase 1, we'll skip this and focus on description enhancement
@@ -98,7 +98,7 @@ Por favor, transforma esta descripción en un texto profesional y atractivo para
   /**
    * Generate project suggestions based on images (future feature)
    */
-  async generateSuggestions(projectData: any): Promise<string[]> {
+  async generateSuggestions(_projectData: any): Promise<string[]> {
     // Future feature: AI-generated improvement suggestions
     return [];
   }

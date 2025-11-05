@@ -7,7 +7,7 @@ export class ImageController {
   /**
    * Upload before images
    */
-  async uploadBefore(req: Request, res: Response) {
+  async uploadBefore(req: Request, res: Response): Promise<any> {
     try {
       const { projectId } = req.body;
       const user = req.user!;
@@ -69,7 +69,7 @@ export class ImageController {
   /**
    * Upload after images
    */
-  async uploadAfter(req: Request, res: Response) {
+  async uploadAfter(req: Request, res: Response): Promise<any> {
     try {
       const { projectId } = req.body;
       const user = req.user!;

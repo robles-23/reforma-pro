@@ -10,19 +10,21 @@ const router = Router();
  * Proxy images from R2 to bypass CORS/SSL issues
  * No authentication required for public presentations
  */
-router.get('/proxy', async (req, res) => {
+router.get('/proxy', async (req, res): Promise<void> => {
   try {
     const imageUrl = req.query.url as string;
 
     if (!imageUrl) {
-      return res.status(400).json({ error: 'URL parameter is required' });
+      res.status(400).json({ error: 'URL parameter is required' });
+      return;
     }
 
     // Fetch image from R2
     const response = await fetch(imageUrl);
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: 'Failed to fetch image' });
+      res.status(response.status).json({ error: 'Failed to fetch image' });
+      return;
     }
 
     // Get content type

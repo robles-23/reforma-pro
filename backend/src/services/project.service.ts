@@ -278,7 +278,7 @@ export class ProjectService {
   async updateStatus(
     projectId: string,
     status: 'DRAFT' | 'PROCESSING' | 'COMPLETED' | 'FAILED',
-    errorMessage?: string
+    _errorMessage?: string
   ) {
     try {
       const data: any = {

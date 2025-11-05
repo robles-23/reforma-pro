@@ -69,7 +69,7 @@ if (env.NODE_ENV === 'development') {
 }
 
 // Health check endpoint
-app.get('/health', async (req: Request, res: Response) => {
+app.get('/health', async (_req: Request, res: Response) => {
   try {
     // Check database connection
     await prisma.$queryRaw`SELECT 1`;
@@ -128,7 +128,7 @@ app.use((req: Request, res: Response) => {
 });
 
 // Global error handler
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((error: Error, req: Request, res: Response, _next: NextFunction) => {
   logger.error('Unhandled error:', {
     error: error.message,
     stack: error.stack,

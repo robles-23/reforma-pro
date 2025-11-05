@@ -23,7 +23,7 @@ export class ImageService {
   async processAndUpload(
     file: Express.Multer.File,
     projectId: string,
-    type: 'BEFORE' | 'AFTER'
+    _type: 'BEFORE' | 'AFTER'
   ): Promise<ProcessedImage> {
     try {
       const imageId = nanoid();

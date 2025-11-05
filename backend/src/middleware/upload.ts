@@ -5,7 +5,7 @@ import { env } from '@/config/env';
 const storage = multer.memoryStorage();
 
 // File filter for images
-const imageFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const imageFilter = (_req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   const allowedTypes = env.ALLOWED_FILE_TYPES.split(',');
 
   if (allowedTypes.includes(file.mimetype)) {
@@ -16,7 +16,7 @@ const imageFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterC
 };
 
 // File filter for PDFs
-const pdfFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const pdfFilter = (_req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   const allowedTypes = ['application/pdf'];
 
   if (allowedTypes.includes(file.mimetype)) {
