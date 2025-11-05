@@ -14,7 +14,7 @@ router.use(authenticate);
  */
 router.post(
   '/projects/:projectId/budgets',
-  upload.array('images', 1),
+  upload.array('files', 1),
   budgetController.upload.bind(budgetController)
 );
 

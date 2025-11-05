@@ -14,7 +14,7 @@ router.use(authenticate);
  */
 router.post(
   '/projects/:projectId/electronic-invoices',
-  upload.array('images', 1),
+  upload.array('files', 1),
   electronicInvoiceController.upload.bind(electronicInvoiceController)
 );
 
