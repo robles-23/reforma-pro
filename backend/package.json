@@ -13,6 +13,7 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "generate": "prisma generate",
+    "create-admin": "tsx scripts/create-admin.ts",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "type-check": "tsc --noEmit",
