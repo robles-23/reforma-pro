@@ -453,15 +453,8 @@ export default function PresentationPage() {
         </div>
       )}
 
-      {/* Corner Logos */}
-      <div className="fixed top-6 left-6 z-40">
-        <img
-          src="/LogoABU.jpg"
-          alt="24 horas"
-          className="w-16 h-16 object-contain opacity-90"
-        />
-      </div>
-      <div className="fixed top-6 right-6 z-40">
+      {/* Corner Logo */}
+      <div className="fixed top-2 right-6 z-40">
         <img
           src="/LogoABU.jpg"
           alt="24 horas"
