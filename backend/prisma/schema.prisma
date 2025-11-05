@@ -279,15 +279,18 @@ model TechnicalSheet {
 model Budget {
   id           String   @id @default(uuid())
   projectId    String   @map("project_id")
-  pdfUrl       String   @map("pdf_url") @db.Text
+  imageUrl     String   @map("image_url") @db.Text
+  thumbnailUrl String?  @map("thumbnail_url") @db.Text
   fileName     String   @map("file_name")
   fileSize     Int      @map("file_size")
+  orderIndex   Int      @map("order_index") @default(0)
   uploadedAt   DateTime @default(now()) @map("uploaded_at")
 
   // Relations
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([projectId])
+  @@index([projectId, orderIndex])
   @@map("budgets")
 }
 
@@ -295,14 +298,17 @@ model Budget {
 model ElectronicInvoice {
   id           String   @id @default(uuid())
   projectId    String   @map("project_id")
-  pdfUrl       String   @map("pdf_url") @db.Text
+  imageUrl     String   @map("image_url") @db.Text
+  thumbnailUrl String?  @map("thumbnail_url") @db.Text
   fileName     String   @map("file_name")
   fileSize     Int      @map("file_size")
+  orderIndex   Int      @map("order_index") @default(0)
   uploadedAt   DateTime @default(now()) @map("uploaded_at")
 
   // Relations
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([projectId])
+  @@index([projectId, orderIndex])
   @@map("electronic_invoices")
 }
