@@ -232,6 +232,15 @@ export default function PresentationPage() {
     <div className="page">
       {/* Print styles */}
       <style>{`
+        /* Logo positioning */
+        .logo-header {
+          display: block;
+        }
+
+        .logo-print-corner {
+          display: none;
+        }
+
         @media print {
           @page {
             size: A4;
@@ -257,6 +266,15 @@ export default function PresentationPage() {
             print-color-adjust: exact !important;
             -webkit-print-color-adjust: exact !important;
             color-adjust: exact !important;
+          }
+
+          /* Hide logo in header, show in corner when printing */
+          .logo-header {
+            display: none !important;
+          }
+
+          .logo-print-corner {
+            display: block !important;
           }
 
           main {
@@ -414,8 +432,13 @@ export default function PresentationPage() {
       <header className="header">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between">
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
               <h1 className="logo">Abu24.</h1>
+              <img
+                src="/LogoABU.jpg"
+                alt="24 horas"
+                className="w-12 h-12 object-contain opacity-90 logo-header"
+              />
             </div>
             <div className="flex items-center gap-3 no-print">
               <button
@@ -453,8 +476,8 @@ export default function PresentationPage() {
         </div>
       )}
 
-      {/* Corner Logo */}
-      <div className="fixed top-2 right-6 z-40">
+      {/* Corner Logo - Only visible when printing */}
+      <div className="fixed top-2 right-6 z-40 logo-print-corner">
         <img
           src="/LogoABU.jpg"
           alt="24 horas"
