@@ -416,15 +416,15 @@
 }
 
 .gallery-item-inner {
-  padding: 0.5rem;
+  padding: 0.75rem;
   background-color: var(--color-white);
   height: 100%;
-  border: 1px solid #b8c4a9;
+  border: 8px solid #b8c4a9;
   transition: border-color 0.2s ease;
 }
 
 .gallery-item-inner:hover {
-  border-color: #6B7F39;
+  border-color: #a3b48e;
 }
 
 .gallery-item img {
