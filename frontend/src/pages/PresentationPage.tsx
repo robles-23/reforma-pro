@@ -67,7 +67,6 @@ function BeforeAfterSlider({ beforeImage, afterImage }: BeforeAfterSliderProps) 
         alt="Después"
         className="absolute inset-0 w-full h-full object-cover"
         draggable={false}
-        crossOrigin="anonymous"
         onError={(e) => {
           console.error('Failed to load after image:', afterImage);
           e.currentTarget.style.display = 'none';
@@ -84,7 +83,6 @@ function BeforeAfterSlider({ beforeImage, afterImage }: BeforeAfterSliderProps) 
           alt="Antes"
           className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
-          crossOrigin="anonymous"
           onError={(e) => {
             console.error('Failed to load before image:', beforeImage);
             e.currentTarget.style.display = 'none';
@@ -533,7 +531,6 @@ export default function PresentationPage() {
                     src={project.afterImages[index]?.url || ''}
                     alt={`Vista ${index + 1}`}
                     className="w-full h-full object-cover"
-                    crossOrigin="anonymous"
                   />
                 </button>
               ))}
@@ -591,7 +588,6 @@ export default function PresentationPage() {
                     src={note.imageUrl}
                     alt="Albarán"
                     className="w-full h-auto object-contain"
-                    crossOrigin="anonymous"
                   />
                 </div>
               ))}
@@ -616,7 +612,6 @@ export default function PresentationPage() {
                     src={budget.imageUrl}
                     alt="Presupuesto"
                     className="w-full h-auto object-contain"
-                    crossOrigin="anonymous"
                   />
                   <div className="no-print absolute bottom-0 left-0 right-0 bg-gradient-to-t from-minimal-black/80 to-transparent p-4">
                     <a
@@ -654,7 +649,6 @@ export default function PresentationPage() {
                     src={invoice.imageUrl}
                     alt="Factura Electrónica"
                     className="w-full h-auto object-contain"
-                    crossOrigin="anonymous"
                   />
                   <div className="no-print absolute bottom-0 left-0 right-0 bg-gradient-to-t from-minimal-black/80 to-transparent p-4">
                     <a
@@ -770,7 +764,6 @@ export default function PresentationPage() {
                           src={img.url}
                           alt="Antes"
                           className="w-full h-full object-cover"
-                          crossOrigin="anonymous"
                         />
                       </div>
                     </div>
@@ -798,7 +791,6 @@ export default function PresentationPage() {
                           src={img.url}
                           alt="Después"
                           className="w-full h-full object-cover"
-                          crossOrigin="anonymous"
                         />
                       </div>
                     </div>
