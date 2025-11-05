@@ -417,7 +417,7 @@
 
 .gallery-item-inner {
   padding: 0.75rem;
-  background-color: var(--color-white);
+  background-color: #b8c4a9;
   height: 100%;
   border: 8px solid #b8c4a9;
   transition: border-color 0.2s ease;

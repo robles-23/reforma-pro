@@ -605,40 +605,68 @@ export default function PresentationPage() {
               <div className="divider-short"></div>
             </div>
 
-            <div className="grid grid-cols-1 max-w-2xl mx-auto gap-6">
-              {project.budgets.map((budget: any) => {
+            <div className="space-y-4">
+              {project.budgets.map((budget: any, index: number) => {
                 const isPdf = budget.imageUrl.endsWith('.pdf');
-                return (
-                  <div key={budget.id} className="relative overflow-hidden rounded-none border border-minimal-lightgray">
-                    {isPdf ? (
-                      <embed
-                        src={budget.imageUrl}
-                        type="application/pdf"
-                        className="w-full h-[600px]"
-                      />
-                    ) : (
+
+                if (isPdf) {
+                  // PDF layout - similar to technical sheets
+                  return (
+                    <div key={budget.id} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border border-minimal-lightgray bg-minimal-white hover:bg-gray-50 transition-colors no-print">
+                      <div className="flex-shrink-0 w-10 h-10 bg-minimal-black text-minimal-white flex items-center justify-center font-sans font-semibold text-sm">
+                        {index + 1}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-sans font-medium text-minimal-black">Presupuesto</p>
+                        <p className="text-xs text-gray-500 mt-1 break-all">{budget.fileName}</p>
+                      </div>
+                      <a
+                        href={budget.imageUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto flex-shrink-0 px-4 py-2 bg-minimal-black text-minimal-white font-sans text-sm hover:bg-gray-800 transition-colors text-center"
+                      >
+                        Ver documento →
+                      </a>
+                    </div>
+                  );
+                } else {
+                  // Image layout - original style
+                  return (
+                    <div key={budget.id} className="relative overflow-hidden rounded-none border border-minimal-lightgray">
                       <img
                         src={budget.imageUrl}
                         alt="Presupuesto"
                         className="w-full h-auto object-contain"
                       />
-                    )}
-                    <div className="no-print absolute bottom-0 left-0 right-0 bg-gradient-to-t from-minimal-black/80 to-transparent p-4">
-                      <a
-                        href={budget.imageUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-minimal-white text-minimal-black text-sm font-medium hover:bg-gray-100 transition-colors"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <span>Ver documento</span>
-                      </a>
+                      <div className="no-print absolute bottom-0 left-0 right-0 bg-gradient-to-t from-minimal-black/80 to-transparent p-4">
+                        <a
+                          href={budget.imageUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-minimal-white text-minimal-black text-sm font-medium hover:bg-gray-100 transition-colors"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          <span>Ver documento</span>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                );
+                  );
+                }
               })}
+
+              {/* Print-only version for PDFs */}
+              <div className="print-only space-y-2 mt-6">
+                {project.budgets.filter((budget: any) => budget.imageUrl.endsWith('.pdf')).map((budget: any, index: number) => (
+                  <div key={budget.id} className="flex items-baseline gap-2">
+                    <span className="font-sans font-medium text-minimal-black">{index + 1}.</span>
+                    <span className="font-sans text-minimal-black">Presupuesto</span>
+                    <span className="text-gray-600 text-sm">— Ver documento</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -653,40 +681,68 @@ export default function PresentationPage() {
               <div className="divider-short"></div>
             </div>
 
-            <div className="grid grid-cols-1 max-w-2xl mx-auto gap-6">
-              {project.electronicInvoices.map((invoice: any) => {
+            <div className="space-y-4">
+              {project.electronicInvoices.map((invoice: any, index: number) => {
                 const isPdf = invoice.imageUrl.endsWith('.pdf');
-                return (
-                  <div key={invoice.id} className="relative overflow-hidden rounded-none border border-minimal-lightgray">
-                    {isPdf ? (
-                      <embed
-                        src={invoice.imageUrl}
-                        type="application/pdf"
-                        className="w-full h-[600px]"
-                      />
-                    ) : (
+
+                if (isPdf) {
+                  // PDF layout - similar to technical sheets
+                  return (
+                    <div key={invoice.id} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border border-minimal-lightgray bg-minimal-white hover:bg-gray-50 transition-colors no-print">
+                      <div className="flex-shrink-0 w-10 h-10 bg-minimal-black text-minimal-white flex items-center justify-center font-sans font-semibold text-sm">
+                        {index + 1}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-sans font-medium text-minimal-black">Factura Electrónica</p>
+                        <p className="text-xs text-gray-500 mt-1 break-all">{invoice.fileName}</p>
+                      </div>
+                      <a
+                        href={invoice.imageUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto flex-shrink-0 px-4 py-2 bg-minimal-black text-minimal-white font-sans text-sm hover:bg-gray-800 transition-colors text-center"
+                      >
+                        Ver documento →
+                      </a>
+                    </div>
+                  );
+                } else {
+                  // Image layout - original style
+                  return (
+                    <div key={invoice.id} className="relative overflow-hidden rounded-none border border-minimal-lightgray">
                       <img
                         src={invoice.imageUrl}
                         alt="Factura Electrónica"
                         className="w-full h-auto object-contain"
                       />
-                    )}
-                    <div className="no-print absolute bottom-0 left-0 right-0 bg-gradient-to-t from-minimal-black/80 to-transparent p-4">
-                      <a
-                        href={invoice.imageUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-minimal-white text-minimal-black text-sm font-medium hover:bg-gray-100 transition-colors"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <span>Ver documento</span>
-                      </a>
+                      <div className="no-print absolute bottom-0 left-0 right-0 bg-gradient-to-t from-minimal-black/80 to-transparent p-4">
+                        <a
+                          href={invoice.imageUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-minimal-white text-minimal-black text-sm font-medium hover:bg-gray-100 transition-colors"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          <span>Ver documento</span>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                );
+                  );
+                }
               })}
+
+              {/* Print-only version for PDFs */}
+              <div className="print-only space-y-2 mt-6">
+                {project.electronicInvoices.filter((invoice: any) => invoice.imageUrl.endsWith('.pdf')).map((invoice: any, index: number) => (
+                  <div key={invoice.id} className="flex items-baseline gap-2">
+                    <span className="font-sans font-medium text-minimal-black">{index + 1}.</span>
+                    <span className="font-sans text-minimal-black">Factura Electrónica</span>
+                    <span className="text-gray-600 text-sm">— Ver documento</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
