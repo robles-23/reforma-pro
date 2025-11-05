@@ -635,14 +635,14 @@ export default function UploadPage() {
               <div className="mt-8 pt-8 border-t border-olive-200">
                 <div>
                   <h3 className="text-xl font-bold text-olive-900">Presupuesto (Opcional)</h3>
-                  <p className="text-olive-600 mt-1">Sube 1 archivo PDF o imagen del presupuesto</p>
+                  <p className="text-olive-600 mt-1">Sube 1 imagen (JPG, JPEG o PNG) del presupuesto</p>
                 </div>
 
                 {/* File Upload Input */}
                 <div className="mt-4">
                   <input
                     type="file"
-                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                    accept=".jpg,.jpeg,.png,image/jpeg,image/png"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
@@ -684,14 +684,14 @@ export default function UploadPage() {
               <div className="mt-8 pt-8 border-t border-olive-200">
                 <div>
                   <h3 className="text-xl font-bold text-olive-900">Factura Electrónica (Opcional)</h3>
-                  <p className="text-olive-600 mt-1">Sube 1 archivo PDF o imagen de la factura electrónica</p>
+                  <p className="text-olive-600 mt-1">Sube 1 imagen (JPG, JPEG o PNG) de la factura electrónica</p>
                 </div>
 
                 {/* File Upload Input */}
                 <div className="mt-4">
                   <input
                     type="file"
-                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                    accept=".jpg,.jpeg,.png,image/jpeg,image/png"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
