@@ -5,7 +5,7 @@ import { prisma } from '@/config/database';
 import { env } from '@/config/env';
 import { logger } from '@/config/logger';
 import { nanoid } from 'nanoid';
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { getDocument } from 'pdfjs-dist/legacy/build/pdf';
 import { createCanvas } from 'canvas';
 
 export interface ProcessedElectronicInvoice {
@@ -24,7 +24,7 @@ export class ElectronicInvoiceService {
   private async convertPdfToImage(pdfBuffer: Buffer): Promise<Buffer> {
     try {
       // Load PDF
-      const loadingTask = pdfjsLib.getDocument({
+      const loadingTask = getDocument({
         data: new Uint8Array(pdfBuffer),
         useSystemFonts: true,
       });
