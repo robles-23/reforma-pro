@@ -5,6 +5,8 @@ import { prisma } from '@/config/database';
 import { env } from '@/config/env';
 import { logger } from '@/config/logger';
 import { nanoid } from 'nanoid';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { createCanvas } from 'canvas';
 
 export interface ProcessedBudget {
   id: string;
@@ -17,7 +19,41 @@ export interface ProcessedBudget {
 
 export class BudgetService {
   /**
-   * Process and upload budget file
+   * Convert PDF first page to image buffer
+   */
+  private async convertPdfToImage(pdfBuffer: Buffer): Promise<Buffer> {
+    try {
+      // Load PDF
+      const loadingTask = pdfjsLib.getDocument({
+        data: new Uint8Array(pdfBuffer),
+        useSystemFonts: true,
+      });
+      const pdf = await loadingTask.promise;
+
+      // Get first page
+      const page = await pdf.getPage(1);
+      const viewport = page.getViewport({ scale: 2.0 }); // 2x scale for better quality
+
+      // Create canvas
+      const canvas = createCanvas(viewport.width, viewport.height);
+      const context = canvas.getContext('2d');
+
+      // Render PDF page to canvas
+      await page.render({
+        canvasContext: context as any,
+        viewport: viewport,
+      }).promise;
+
+      // Convert canvas to buffer
+      return canvas.toBuffer('image/png');
+    } catch (error) {
+      logger.error('Error converting PDF to image:', error);
+      throw new Error('Failed to convert PDF to image');
+    }
+  }
+
+  /**
+   * Process and upload budget file (supports images and PDFs)
    */
   async processAndUpload(
     file: Express.Multer.File,
@@ -28,16 +64,31 @@ export class BudgetService {
       const budgetId = nanoid();
       const extension = 'webp';
 
-      // Generate image and thumbnail
+      let imageBuffer: Buffer;
+
+      // Check if file is PDF
+      const isPdf = file.mimetype === 'application/pdf' || file.originalname.toLowerCase().endsWith('.pdf');
+
+      if (isPdf) {
+        logger.info('Processing PDF budget file...');
+        // Convert PDF to image first
+        const pngBuffer = await this.convertPdfToImage(file.buffer);
+        imageBuffer = pngBuffer;
+      } else {
+        // It's already an image
+        imageBuffer = file.buffer;
+      }
+
+      // Generate image and thumbnail using Sharp
       const [image, thumbnail] = await Promise.all([
         // Main image (1920px max)
-        sharp(file.buffer)
+        sharp(imageBuffer)
           .resize(env.FULL_SIZE, null, { fit: 'inside', withoutEnlargement: true })
           .webp({ quality: env.IMAGE_QUALITY })
           .toBuffer(),
 
         // Thumbnail (200px)
-        sharp(file.buffer)
+        sharp(imageBuffer)
           .resize(env.THUMBNAIL_SIZE, env.THUMBNAIL_SIZE, { fit: 'cover' })
           .webp({ quality: 80 })
           .toBuffer(),
@@ -68,7 +119,7 @@ export class BudgetService {
         },
       });
 
-      logger.info(`Budget uploaded: ${budgetId}`);
+      logger.info(`Budget uploaded: ${budgetId} (${isPdf ? 'PDF converted to image' : 'image'})`);
 
       return {
         id: budget.id,
