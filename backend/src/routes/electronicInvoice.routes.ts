@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authenticate } from '@/middleware/auth';
-import { upload } from '@/middleware/upload';
+import { uploadImageOrPDF } from '@/middleware/upload';
 import { electronicInvoiceController } from '@/controllers/electronicInvoice.controller';
 
 const router = Router();
@@ -14,7 +14,7 @@ router.use(authenticate);
  */
 router.post(
   '/projects/:projectId/electronic-invoices',
-  upload.array('files', 1),
+  uploadImageOrPDF.array('files', 1),
   electronicInvoiceController.upload.bind(electronicInvoiceController)
 );
 

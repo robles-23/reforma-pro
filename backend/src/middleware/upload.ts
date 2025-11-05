@@ -26,6 +26,17 @@ const pdfFilter = (_req: any, file: Express.Multer.File, cb: multer.FileFilterCa
   }
 };
 
+// File filter for images AND PDFs (for budget and invoice)
+const imageAndPdfFilter = (_req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+  const allowedTypes = [...env.ALLOWED_FILE_TYPES.split(','), 'application/pdf'];
+
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error(`Invalid file type. Allowed types: ${allowedTypes.join(', ')}`));
+  }
+};
+
 // Create multer instance for images
 export const upload = multer({
   storage,
@@ -43,5 +54,15 @@ export const uploadPDF = multer({
   limits: {
     fileSize: 20 * 1024 * 1024, // 20MB for PDFs
     files: 10, // Max 10 PDFs per upload
+  },
+});
+
+// Create multer instance for images AND PDFs (for budget and invoice)
+export const uploadImageOrPDF = multer({
+  storage,
+  fileFilter: imageAndPdfFilter,
+  limits: {
+    fileSize: 20 * 1024 * 1024, // 20MB to support PDFs
+    files: 1,
   },
 });

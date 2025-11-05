@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authenticate } from '@/middleware/auth';
-import { upload } from '@/middleware/upload';
+import { uploadImageOrPDF } from '@/middleware/upload';
 import { budgetController } from '@/controllers/budget.controller';
 
 const router = Router();
@@ -14,7 +14,7 @@ router.use(authenticate);
  */
 router.post(
   '/projects/:projectId/budgets',
-  upload.array('files', 1),
+  uploadImageOrPDF.array('files', 1),
   budgetController.upload.bind(budgetController)
 );
 
