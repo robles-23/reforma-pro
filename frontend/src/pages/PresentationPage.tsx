@@ -31,6 +31,7 @@ function BeforeAfterSlider({ beforeImage, afterImage }: BeforeAfterSliderProps) 
 
   const handleTouchMove = (e: TouchEvent) => {
     if (!isDragging) return;
+    e.preventDefault();
     handleMove(e.touches[0].clientX);
   };
 
@@ -610,19 +611,19 @@ export default function PresentationPage() {
 
             <div className="space-y-4">
               {project.technicalSheets.map((sheet: any, index: number) => (
-                <div key={sheet.id} className="flex items-center gap-4 p-4 border border-minimal-lightgray bg-minimal-white hover:bg-gray-50 transition-colors no-print">
+                <div key={sheet.id} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border border-minimal-lightgray bg-minimal-white hover:bg-gray-50 transition-colors no-print">
                   <div className="flex-shrink-0 w-10 h-10 bg-minimal-black text-minimal-white flex items-center justify-center font-sans font-semibold text-sm">
                     {index + 1}
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <p className="font-sans font-medium text-minimal-black">{sheet.productName}</p>
-                    <p className="text-xs text-gray-500 mt-1">{sheet.fileName}</p>
+                    <p className="text-xs text-gray-500 mt-1 break-all">{sheet.fileName}</p>
                   </div>
                   <a
                     href={sheet.pdfUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-shrink-0 px-4 py-2 bg-minimal-black text-minimal-white font-sans text-sm hover:bg-gray-800 transition-colors"
+                    className="w-full sm:w-auto flex-shrink-0 px-4 py-2 bg-minimal-black text-minimal-white font-sans text-sm hover:bg-gray-800 transition-colors text-center"
                   >
                     Ver ficha técnica →
                   </a>
