@@ -380,9 +380,9 @@
    GALERÍA DE IMÁGENES
    ============================================ */
 .gallery-container {
-  background-color: transparent;
+  background-color: var(--color-white);
   padding: 1.5rem;
-  border: none;
+  border: 2px solid #b8c4a9;
 }
 
 @media (min-width: 768px) {
@@ -416,15 +416,15 @@
 }
 
 .gallery-item-inner {
-  padding: 0;
-  background-color: transparent;
+  padding: 0.5rem;
+  background-color: var(--color-white);
   height: 100%;
-  border: none;
-  transition: opacity 0.2s ease;
+  border: 1px solid #b8c4a9;
+  transition: border-color 0.2s ease;
 }
 
 .gallery-item-inner:hover {
-  opacity: 0.9;
+  border-color: #6B7F39;
 }
 
 .gallery-item img {
