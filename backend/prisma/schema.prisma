@@ -1,0 +1,274 @@
+// Reforma Pro Database Schema
+// PostgreSQL 15+ with Prisma ORM
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  WORKER
+}
+
+enum ProjectStatus {
+  DRAFT
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum ImageType {
+  BEFORE
+  AFTER
+}
+
+enum JobStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum EventType {
+  VIEW
+  SHARE
+  DOWNLOAD
+  CLICK
+}
+
+// Companies
+model Company {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  logoUrl     String?  @map("logo_url")
+  brandColors Json     @default("{\"primary\": \"#6B7F39\", \"secondary\": \"#8FA84E\", \"accent\": \"#B8C59A\"}") @map("brand_colors")
+  settings    Json     @default("{\"language\": \"es\", \"theme\": \"light\"}")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  users    User[]
+  projects Project[]
+
+  @@map("companies")
+}
+
+// Users
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  name         String
+  role         UserRole  @default(WORKER)
+  companyId    String    @map("company_id")
+  avatarUrl    String?   @map("avatar_url")
+  isActive     Boolean   @default(true) @map("is_active")
+  lastLoginAt  DateTime? @map("last_login_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  company       Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  projects      Project[]
+  refreshTokens RefreshToken[]
+  auditLogs     AuditLog[]
+
+  @@index([email])
+  @@index([companyId])
+  @@index([role])
+  @@map("users")
+}
+
+// Projects
+model Project {
+  id                    String        @id @default(uuid())
+  companyId             String        @map("company_id")
+  createdByUserId       String        @map("created_by_user_id")
+  title                 String
+  descriptionOriginal   String        @map("description_original") @db.Text
+  descriptionEnhanced   String?       @map("description_enhanced") @db.Text
+  location              String?
+  clientName            String?       @map("client_name")
+  storeCode             String?       @map("store_code")
+  status                ProjectStatus @default(DRAFT)
+  presentationToken     String        @unique @default(cuid()) @map("presentation_token")
+  metadata              Json          @default("{}")
+  viewCount             Int           @default(0) @map("view_count")
+  shareCount            Int           @default(0) @map("share_count")
+  createdAt             DateTime      @default(now()) @map("created_at")
+  updatedAt             DateTime      @updatedAt @map("updated_at")
+  completedAt           DateTime?     @map("completed_at")
+
+  // Relations
+  company         Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdBy       User              @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  images          Image[]
+  deliveryNotes   DeliveryNote[]
+  technicalSheets TechnicalSheet[]
+  processingJobs  ProcessingJob[]
+  analyticsEvents AnalyticsEvent[]
+
+  @@index([companyId])
+  @@index([createdByUserId])
+  @@index([status])
+  @@index([presentationToken])
+  @@index([createdAt(sort: Desc)])
+  @@map("projects")
+}
+
+// Images
+model Image {
+  id           String    @id @default(uuid())
+  projectId    String    @map("project_id")
+  type         ImageType
+  originalUrl  String    @map("original_url") @db.Text
+  thumbnailUrl String?   @map("thumbnail_url") @db.Text
+  mediumUrl    String?   @map("medium_url") @db.Text
+  fullUrl      String?   @map("full_url") @db.Text
+  fileName     String    @map("file_name")
+  fileSize     Int       @map("file_size")
+  width        Int?
+  height       Int?
+  format       String?
+  orderIndex   Int       @map("order_index")
+  metadata     Json      @default("{}")
+  uploadedAt   DateTime  @default(now()) @map("uploaded_at")
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([type])
+  @@index([projectId, type, orderIndex])
+  @@map("images")
+}
+
+// Processing Jobs
+model ProcessingJob {
+  id                String    @id @default(uuid())
+  projectId         String    @map("project_id")
+  jobType           String    @map("job_type")
+  status            JobStatus @default(QUEUED)
+  aiModelUsed       String?   @map("ai_model_used")
+  processingTimeMs  Int?      @map("processing_time_ms")
+  tokensUsed        Int?      @map("tokens_used")
+  errorMessage      String?   @map("error_message") @db.Text
+  retryCount        Int       @default(0) @map("retry_count")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  startedAt         DateTime? @map("started_at")
+  completedAt       DateTime? @map("completed_at")
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@map("processing_jobs")
+}
+
+// Analytics Events
+model AnalyticsEvent {
+  id          String    @id @default(uuid())
+  projectId   String?   @map("project_id")
+  eventType   EventType @map("event_type")
+  metadata    Json      @default("{}")
+  ipAddress   String?   @map("ip_address")
+  userAgent   String?   @map("user_agent") @db.Text
+  referrer    String?   @db.Text
+  countryCode String?   @map("country_code")
+  city        String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  // Relations
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([eventType])
+  @@index([createdAt(sort: Desc)])
+  @@map("analytics_events")
+}
+
+// Refresh Tokens
+model RefreshToken {
+  id        String    @id @default(uuid())
+  userId    String    @map("user_id")
+  token     String    @unique
+  expiresAt DateTime  @map("expires_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  revokedAt DateTime? @map("revoked_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+  @@map("refresh_tokens")
+}
+
+// Audit Logs
+model AuditLog {
+  id           String   @id @default(uuid())
+  userId       String?  @map("user_id")
+  action       String
+  resourceType String   @map("resource_type")
+  resourceId   String?  @map("resource_id")
+  changes      Json?
+  ipAddress    String?  @map("ip_address")
+  userAgent    String?  @map("user_agent") @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([resourceType, resourceId])
+  @@index([createdAt(sort: Desc)])
+  @@map("audit_logs")
+}
+
+// Delivery Notes (Albarán)
+model DeliveryNote {
+  id           String   @id @default(uuid())
+  projectId    String   @map("project_id")
+  imageUrl     String   @map("image_url") @db.Text
+  thumbnailUrl String?  @map("thumbnail_url") @db.Text
+  fileName     String   @map("file_name")
+  fileSize     Int      @map("file_size")
+  orderIndex   Int      @map("order_index") @default(0)
+  uploadedAt   DateTime @default(now()) @map("uploaded_at")
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([projectId, orderIndex])
+  @@map("delivery_notes")
+}
+
+// Technical Sheets (Fichas Técnicas)
+model TechnicalSheet {
+  id          String   @id @default(uuid())
+  projectId   String   @map("project_id")
+  productName String   @map("product_name")
+  pdfUrl      String   @map("pdf_url") @db.Text
+  fileName    String   @map("file_name")
+  fileSize    Int      @map("file_size")
+  orderIndex  Int      @map("order_index") @default(0)
+  uploadedAt  DateTime @default(now()) @map("uploaded_at")
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([projectId, orderIndex])
+  @@map("technical_sheets")
+}

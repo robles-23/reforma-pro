@@ -1,0 +1,609 @@
+/*
+ * Reforma Pro - Estilos Minimalistas
+ * Color de fondo: #b8c4a9 (sage green)
+ * Tipografías: DM Sans (sans-serif) + DM Serif Display (serif)
+ */
+
+/* ============================================
+   TIPOGRAFÍAS - Google Fonts
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap');
+
+/* ============================================
+   VARIABLES DE COLOR
+   ============================================ */
+:root {
+  /* Color principal - EXACTO según referencia */
+  --color-sage: #b8c4a9;
+
+  /* Colores minimalistas */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-gray: #6B6B6B;
+  --color-lightgray: #E5E5E5;
+}
+
+/* ============================================
+   PÁGINA BASE
+   ============================================ */
+.page {
+  min-height: 100vh;
+  background-color: var(--color-sage);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--color-black);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.header {
+  background-color: var(--color-sage);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.logo {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--color-black);
+  letter-spacing: -0.01em;
+}
+
+/* ============================================
+   TÍTULOS
+   ============================================ */
+.title-mixed {
+  font-size: 108px;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "DM Sans", "DM Sans Placeholder", sans-serif;
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+  color: var(--color-black);
+  margin-bottom: 2rem;
+}
+
+.title-mixed .sans {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.07em;
+}
+
+.title-mixed .serif {
+  font-family: 'DM Serif Display', serif;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: -0.02em;
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .title-mixed {
+    font-size: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .title-mixed {
+    font-size: 56px;
+  }
+}
+
+/* ============================================
+   SECCIÓN DE UBICACIÓN Y FECHA
+   ============================================ */
+.location-date {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--color-gray);
+  margin-bottom: 2.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+}
+
+.location-date span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ============================================
+   DIVISORES
+   ============================================ */
+.divider {
+  width: 160px;
+  height: 1px;
+  background-color: var(--color-black);
+  opacity: 0.2;
+  margin: 2.5rem 0;
+}
+
+.divider-short {
+  width: 80px;
+  height: 1px;
+  background-color: var(--color-black);
+  opacity: 0.2;
+  margin: 1rem 0;
+}
+
+.divider-full {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-lightgray);
+  margin: 3rem 0;
+}
+
+/* ============================================
+   TÍTULOS DE SECCIÓN
+   ============================================ */
+.section-title-serif {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-black);
+  margin-bottom: 1rem;
+}
+
+.section-title-sans {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-black);
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .section-title-serif,
+  .section-title-sans {
+    font-size: 2rem;
+  }
+}
+
+/* ============================================
+   CONTENEDORES DE IMÁGENES
+   ============================================ */
+.image-container {
+  background-color: var(--color-white);
+  padding: 1.5rem;
+  border: 1px solid var(--color-lightgray);
+  margin-bottom: 3rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 768px) {
+  .image-container {
+    padding: 2rem;
+  }
+}
+
+/* ============================================
+   COMPARACIÓN ANTES/DESPUÉS
+   ============================================ */
+.comparison-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .comparison-container {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.comparison-image {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--color-lightgray);
+}
+
+.comparison-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.comparison-label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: var(--color-white);
+  padding: 0.5rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-black);
+  border: 1px solid var(--color-lightgray);
+}
+
+.comparison-arrow {
+  font-size: 2rem;
+  color: var(--color-black);
+  opacity: 0.3;
+}
+
+@media (min-width: 768px) {
+  .comparison-arrow {
+    margin: 0 2rem;
+  }
+}
+
+/* ============================================
+   CONTENEDORES DE CONTENIDO
+   ============================================ */
+.content-box {
+  background-color: var(--color-white);
+  padding: 3rem 2rem;
+  border: 1px solid var(--color-lightgray);
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .content-box {
+    padding: 5rem 4rem;
+  }
+}
+
+.content-box-large {
+  background-color: var(--color-white);
+  padding: 2.5rem 2rem;
+  border: 1px solid var(--color-lightgray);
+  margin-bottom: 10rem;
+}
+
+@media (min-width: 768px) {
+  .content-box-large {
+    padding: 3rem 2.5rem;
+  }
+}
+
+/* ============================================
+   TEXTO Y PÁRRAFOS
+   ============================================ */
+.text-body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-gray);
+  font-weight: 400;
+}
+
+.text-small {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+  font-weight: 500;
+}
+
+/* ============================================
+   GRID DE DATOS
+   ============================================ */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-lightgray);
+}
+
+@media (min-width: 768px) {
+  .data-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.data-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.data-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+
+.data-value {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-black);
+}
+
+/* ============================================
+   ESTADÍSTICAS
+   ============================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4rem;
+  }
+}
+
+.stat-number {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .stat-number {
+    font-size: 4rem;
+  }
+}
+
+.stat-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+
+/* ============================================
+   GALERÍA DE IMÁGENES
+   ============================================ */
+.gallery-container {
+  background-color: var(--color-white);
+  padding: 1.5rem;
+  border: 1px solid var(--color-lightgray);
+}
+
+@media (min-width: 768px) {
+  .gallery-container {
+    padding: 2rem;
+  }
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.gallery-item-inner {
+  padding: 0.5rem;
+  background-color: var(--color-white);
+  height: 100%;
+  border: 1px solid var(--color-lightgray);
+  transition: border-color 0.2s ease;
+}
+
+.gallery-item-inner:hover {
+  border-color: var(--color-black);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-section-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  background-color: var(--color-black);
+  padding: 3rem 2rem;
+  margin-top: 5rem;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.footer-brand {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-white);
+  margin-bottom: 0.5rem;
+}
+
+.footer-tagline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: var(--color-white);
+  opacity: 0.5;
+}
+
+.footer-copyright {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: var(--color-white);
+  opacity: 0.5;
+}
+
+.footer-info {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: var(--color-white);
+  opacity: 0.4;
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+.btn-primary {
+  padding: 0.75rem 2rem;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.8;
+}
+
+/* ============================================
+   UTILIDADES
+   ============================================ */
+.no-print {
+  /* Clase para ocultar elementos al imprimir */
+}
+
+@media print {
+  * {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .page {
+    background-color: #b8c4a9 !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}
+
+/* Espaciado */
+.mb-section {
+  margin-bottom: 8rem;
+}
+
+@media (min-width: 768px) {
+  .mb-section {
+    margin-bottom: 10rem;
+  }
+}
+
+.mb-large {
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .mb-large {
+    margin-bottom: 5rem;
+  }
+}
+
+/* ============================================
+   PRINT UTILITIES
+   ============================================ */
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: block !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}

@@ -1,0 +1,49 @@
+========================================
+    REFORMA PRO - ABU24
+========================================
+
+INICIO RÁPIDO:
+--------------
+1. Haz doble clic en "iniciar.bat"
+2. Espera 30 segundos (se abrirán 2 ventanas negras)
+3. La aplicación se abrirá en tu navegador automáticamente
+
+DETENER:
+--------
+- Doble clic en "stop.bat"
+- O cierra las 2 ventanas negras
+
+ACCESO:
+-------
+Frontend: http://localhost:5173
+Backend:  http://localhost:3000
+
+CREDENCIALES DEMO:
+------------------
+Email:    worker@demo.com
+Password: worker123
+
+NOTAS IMPORTANTES:
+------------------
+- La primera vez puede tardar más (instalando dependencias)
+- Necesitas tener Docker corriendo para la base de datos
+- NO cierres las ventanas negras mientras uses la app
+- Si hay error, verifica que los puertos 3000 y 5173 estén libres
+
+SOLUCIÓN DE PROBLEMAS:
+----------------------
+1. Error "puerto en uso":
+   - Ejecuta stop.bat primero
+   - Luego ejecuta start.bat de nuevo
+
+2. Imágenes no cargan:
+   - Verifica tu conexión a internet
+   - El CDN usa: pub-32dcf4c5fb0d4641a50765f8f5e9340c.r2.dev
+
+3. Base de datos no conecta:
+   - Asegúrate de tener Docker Desktop corriendo
+   - Ejecuta: docker-compose up -d
+
+========================================
+Para más información, lee QUICKSTART.md
+========================================
