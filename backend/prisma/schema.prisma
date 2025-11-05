@@ -107,13 +107,15 @@ model Project {
   completedAt           DateTime?     @map("completed_at")
 
   // Relations
-  company         Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  createdBy       User              @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
-  images          Image[]
-  deliveryNotes   DeliveryNote[]
-  technicalSheets TechnicalSheet[]
-  processingJobs  ProcessingJob[]
-  analyticsEvents AnalyticsEvent[]
+  company           Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdBy         User                @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  images            Image[]
+  deliveryNotes     DeliveryNote[]
+  technicalSheets   TechnicalSheet[]
+  budgets           Budget[]
+  electronicInvoices ElectronicInvoice[]
+  processingJobs    ProcessingJob[]
+  analyticsEvents   AnalyticsEvent[]
 
   @@index([companyId])
   @@index([createdByUserId])
@@ -271,4 +273,36 @@ model TechnicalSheet {
   @@index([projectId])
   @@index([projectId, orderIndex])
   @@map("technical_sheets")
+}
+
+// Budgets (Presupuesto)
+model Budget {
+  id           String   @id @default(uuid())
+  projectId    String   @map("project_id")
+  pdfUrl       String   @map("pdf_url") @db.Text
+  fileName     String   @map("file_name")
+  fileSize     Int      @map("file_size")
+  uploadedAt   DateTime @default(now()) @map("uploaded_at")
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@map("budgets")
+}
+
+// Electronic Invoices (Factura Electrónica)
+model ElectronicInvoice {
+  id           String   @id @default(uuid())
+  projectId    String   @map("project_id")
+  pdfUrl       String   @map("pdf_url") @db.Text
+  fileName     String   @map("file_name")
+  fileSize     Int      @map("file_size")
+  uploadedAt   DateTime @default(now()) @map("uploaded_at")
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@map("electronic_invoices")
 }

@@ -599,6 +599,82 @@ export default function PresentationPage() {
           </div>
         )}
 
+        {/* Budget Section (Presupuesto) */}
+        {project.budgets && project.budgets.length > 0 && (
+          <div className="content-box-large">
+            <div className="mb-10">
+              <h3 className="section-title-serif">
+                Presupuesto
+              </h3>
+              <div className="divider-short"></div>
+            </div>
+
+            <div className="grid grid-cols-1 max-w-2xl mx-auto gap-6">
+              {project.budgets.map((budget: any) => (
+                <div key={budget.id} className="relative overflow-hidden rounded-none border border-minimal-lightgray">
+                  <img
+                    src={budget.imageUrl}
+                    alt="Presupuesto"
+                    className="w-full h-auto object-contain"
+                    crossOrigin="anonymous"
+                  />
+                  <div className="no-print absolute bottom-0 left-0 right-0 bg-gradient-to-t from-minimal-black/80 to-transparent p-4">
+                    <a
+                      href={budget.imageUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-minimal-white text-minimal-black text-sm font-medium hover:bg-gray-100 transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      <span>Ver documento</span>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Electronic Invoice Section (Factura Electrónica) */}
+        {project.electronicInvoices && project.electronicInvoices.length > 0 && (
+          <div className="content-box-large">
+            <div className="mb-10">
+              <h3 className="section-title-serif">
+                Factura Electrónica
+              </h3>
+              <div className="divider-short"></div>
+            </div>
+
+            <div className="grid grid-cols-1 max-w-2xl mx-auto gap-6">
+              {project.electronicInvoices.map((invoice: any) => (
+                <div key={invoice.id} className="relative overflow-hidden rounded-none border border-minimal-lightgray">
+                  <img
+                    src={invoice.imageUrl}
+                    alt="Factura Electrónica"
+                    className="w-full h-auto object-contain"
+                    crossOrigin="anonymous"
+                  />
+                  <div className="no-print absolute bottom-0 left-0 right-0 bg-gradient-to-t from-minimal-black/80 to-transparent p-4">
+                    <a
+                      href={invoice.imageUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-minimal-white text-minimal-black text-sm font-medium hover:bg-gray-100 transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      <span>Ver documento</span>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Technical Sheets Section (Fichas Técnicas) */}
         {project.technicalSheets && project.technicalSheets.length > 0 && (
           <div className="content-box-large">

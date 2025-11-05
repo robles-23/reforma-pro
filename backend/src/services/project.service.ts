@@ -228,6 +228,8 @@ export class ProjectService {
           technicalSheets: {
             orderBy: { orderIndex: 'asc' },
           },
+          budgets: true,
+          electronicInvoices: true,
         },
       });
 

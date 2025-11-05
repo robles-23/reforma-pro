@@ -18,6 +18,8 @@ import presentationRoutes from './routes/presentation.routes';
 import adminRoutes from './routes/admin.routes';
 import deliveryNoteRoutes from './routes/deliveryNote.routes';
 import technicalSheetRoutes from './routes/technicalSheet.routes';
+import budgetRoutes from './routes/budget.routes';
+import electronicInvoiceRoutes from './routes/electronicInvoice.routes';
 
 // Create Express app
 const app: Application = express();
@@ -107,6 +109,8 @@ app.use(`${apiPrefix}/presentations`, presentationRoutes);
 app.use(`${apiPrefix}/admin`, adminRoutes);
 app.use(`${apiPrefix}`, deliveryNoteRoutes);
 app.use(`${apiPrefix}`, technicalSheetRoutes);
+app.use(`${apiPrefix}`, budgetRoutes);
+app.use(`${apiPrefix}`, electronicInvoiceRoutes);
 
 // Root endpoint
 app.get('/', (req: Request, res: Response) => {

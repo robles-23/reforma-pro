@@ -32,6 +32,8 @@ export default function UploadPage() {
   const [beforeImages, setBeforeImages] = useState<UploadedImage[]>([]);
   const [afterImages, setAfterImages] = useState<UploadedImage[]>([]);
   const [deliveryNoteImages, setDeliveryNoteImages] = useState<UploadedImage[]>([]);
+  const [budgetFiles, setBudgetFiles] = useState<File[]>([]);
+  const [electronicInvoiceFiles, setElectronicInvoiceFiles] = useState<File[]>([]);
 
   // Technical Sheets
   const [technicalSheets, setTechnicalSheets] = useState<TechnicalSheet[]>([
@@ -123,6 +125,14 @@ export default function UploadPage() {
     setDeliveryNoteImages((prev) => prev.filter((img) => img.id !== id));
   };
 
+  const removeBudgetFile = (index: number) => {
+    setBudgetFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeElectronicInvoiceFile = (index: number) => {
+    setElectronicInvoiceFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const addTechnicalSheet = () => {
     if (technicalSheets.length < 10) {
       setTechnicalSheets((prev) => [
@@ -191,7 +201,27 @@ export default function UploadPage() {
         });
       }
 
-      // Step 5: Upload technical sheets (if any)
+      // Step 5: Upload budget files (if any)
+      if (budgetFiles.length > 0) {
+        setUploadProgress('Subiendo presupuesto...');
+        const budgetFormData = new FormData();
+        budgetFiles.forEach(file => budgetFormData.append('files', file));
+        await api.post(`/projects/${projectId}/budgets`, budgetFormData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+      }
+
+      // Step 6: Upload electronic invoice files (if any)
+      if (electronicInvoiceFiles.length > 0) {
+        setUploadProgress('Subiendo factura electrónica...');
+        const electronicInvoiceFormData = new FormData();
+        electronicInvoiceFiles.forEach(file => electronicInvoiceFormData.append('files', file));
+        await api.post(`/projects/${projectId}/electronic-invoices`, electronicInvoiceFormData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+      }
+
+      // Step 7: Upload technical sheets (if any)
       const validSheets = technicalSheets.filter(s => s.productName.trim() && s.file);
       if (validSheets.length > 0) {
         setUploadProgress(`Subiendo ${validSheets.length} fichas técnicas...`);
@@ -204,12 +234,12 @@ export default function UploadPage() {
         });
       }
 
-      // Step 6: Trigger AI generation
+      // Step 8: Trigger AI generation
       setUploadProgress('Generando presentación con IA...');
       const genRes = await api.post(`/projects/${projectId}/generate`);
       const token = genRes.data.data.presentationToken;
 
-      // Step 7: Poll for completion
+      // Step 9: Poll for completion
       let attempts = 0;
       const maxAttempts = 60; // 2 minutes max
 
@@ -600,6 +630,104 @@ export default function UploadPage() {
                   ))}
                 </div>
               )}
+
+              {/* Budget Section */}
+              <div className="mt-8 pt-8 border-t border-olive-200">
+                <div>
+                  <h3 className="text-xl font-bold text-olive-900">Presupuesto (Opcional)</h3>
+                  <p className="text-olive-600 mt-1">Sube 1 archivo PDF o imagen del presupuesto</p>
+                </div>
+
+                {/* File Upload Input */}
+                <div className="mt-4">
+                  <input
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setBudgetFiles([file]);
+                      }
+                    }}
+                    disabled={budgetFiles.length >= 1}
+                    className="w-full text-sm text-olive-700 file:mr-4 file:py-3 file:px-6 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-olive-100 file:text-olive-700 hover:file:bg-olive-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
+                </div>
+
+                {/* File Preview */}
+                {budgetFiles.length > 0 && (
+                  <div className="mt-4">
+                    {budgetFiles.map((file, index) => (
+                      <div key={index} className="flex items-center justify-between p-4 bg-olive-50 border border-olive-200 rounded-md">
+                        <div className="flex items-center space-x-3">
+                          <svg className="w-8 h-8 text-olive-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          <div>
+                            <p className="text-sm font-medium text-olive-900">{file.name}</p>
+                            <p className="text-xs text-olive-600">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => removeBudgetFile(index)}
+                          className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold hover:bg-red-700"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Electronic Invoice Section */}
+              <div className="mt-8 pt-8 border-t border-olive-200">
+                <div>
+                  <h3 className="text-xl font-bold text-olive-900">Factura Electrónica (Opcional)</h3>
+                  <p className="text-olive-600 mt-1">Sube 1 archivo PDF o imagen de la factura electrónica</p>
+                </div>
+
+                {/* File Upload Input */}
+                <div className="mt-4">
+                  <input
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setElectronicInvoiceFiles([file]);
+                      }
+                    }}
+                    disabled={electronicInvoiceFiles.length >= 1}
+                    className="w-full text-sm text-olive-700 file:mr-4 file:py-3 file:px-6 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-olive-100 file:text-olive-700 hover:file:bg-olive-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
+                </div>
+
+                {/* File Preview */}
+                {electronicInvoiceFiles.length > 0 && (
+                  <div className="mt-4">
+                    {electronicInvoiceFiles.map((file, index) => (
+                      <div key={index} className="flex items-center justify-between p-4 bg-olive-50 border border-olive-200 rounded-md">
+                        <div className="flex items-center space-x-3">
+                          <svg className="w-8 h-8 text-olive-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          <div>
+                            <p className="text-sm font-medium text-olive-900">{file.name}</p>
+                            <p className="text-xs text-olive-600">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => removeElectronicInvoiceFile(index)}
+                          className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold hover:bg-red-700"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* Navigation */}
               <div className="flex justify-between pt-4">
