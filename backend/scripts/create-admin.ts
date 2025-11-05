@@ -19,15 +19,23 @@ async function createAdmin() {
       process.exit(0);
     }
 
-    // Create company
-    const company = await prisma.company.create({
-      data: {
-        name: companyName,
-        email: email,
-        phone: '',
-        address: '',
-      },
+    // Find or create company
+    const slug = companyName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    let company = await prisma.company.findUnique({
+      where: { slug },
     });
+
+    if (!company) {
+      company = await prisma.company.create({
+        data: {
+          name: companyName,
+          slug: slug,
+        },
+      });
+      console.log(`✅ Company created: ${companyName}`);
+    } else {
+      console.log(`✅ Using existing company: ${companyName}`);
+    }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -36,7 +44,7 @@ async function createAdmin() {
     const user = await prisma.user.create({
       data: {
         email,
-        password: hashedPassword,
+        passwordHash: hashedPassword,
         name: 'Administrator',
         role: 'ADMIN',
         companyId: company.id,
