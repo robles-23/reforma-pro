@@ -453,6 +453,22 @@ export default function PresentationPage() {
         </div>
       )}
 
+      {/* Corner Logos */}
+      <div className="fixed top-6 left-6 z-40">
+        <img
+          src="/LogoABU.jpg"
+          alt="24 horas"
+          className="w-16 h-16 object-contain opacity-90"
+        />
+      </div>
+      <div className="fixed top-6 right-6 z-40">
+        <img
+          src="/LogoABU.jpg"
+          alt="24 horas"
+          className="w-16 h-16 object-contain opacity-90"
+        />
+      </div>
+
       {/* Main Content */}
       <main className="max-w-5xl mx-auto px-8 sm:px-12 md:px-16 lg:px-20 pt-16 md:pt-20 pb-0">
         {/* Hero Section */}
