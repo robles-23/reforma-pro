@@ -927,7 +927,7 @@ export default function PresentationPage() {
             {/* Columna derecha: Copyright simple */}
             <div className="text-left md:text-right">
               <p className="footer-copyright mb-1">
-                © 2024 {project.company.name}
+                © 2025 {project.company.name}
               </p>
               <p className="footer-info">
                 Disponible 24 horas

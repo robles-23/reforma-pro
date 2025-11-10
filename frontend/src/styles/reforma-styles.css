@@ -176,16 +176,16 @@
    CONTENEDORES DE IMÁGENES
    ============================================ */
 .image-container {
-  background-color: var(--color-white);
-  padding: 1.5rem;
-  border: 1px solid var(--color-lightgray);
+  background-color: transparent;
+  padding: 0;
+  border: none;
   margin-bottom: 3rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 }
 
 @media (min-width: 768px) {
   .image-container {
-    padding: 2rem;
+    padding: 0;
   }
 }
 
@@ -380,14 +380,14 @@
    GALERÍA DE IMÁGENES
    ============================================ */
 .gallery-container {
-  background-color: var(--color-white);
-  padding: 1.5rem;
-  border: 2px solid #b8c4a9;
+  background-color: transparent;
+  padding: 0;
+  border: none;
 }
 
 @media (min-width: 768px) {
   .gallery-container {
-    padding: 2rem;
+    padding: 0;
   }
 }
 
@@ -416,15 +416,15 @@
 }
 
 .gallery-item-inner {
-  padding: 0.75rem;
-  background-color: #b8c4a9;
+  padding: 0;
+  background-color: transparent;
   height: 100%;
-  border: 8px solid #b8c4a9;
-  transition: border-color 0.2s ease;
+  border: none;
+  transition: opacity 0.2s ease;
 }
 
 .gallery-item-inner:hover {
-  border-color: #a3b48e;
+  opacity: 0.9;
 }
 
 .gallery-item img {
