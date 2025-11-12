@@ -48,7 +48,7 @@ export default function LoginPage() {
               />
             </svg>
           </div>
-          <h1 className="text-4xl font-bold text-olive-900 mb-2">Reforma Pro</h1>
+          <h1 className="text-4xl font-bold text-olive-900 mb-2">Abu24 Reportes</h1>
           <p className="text-olive-600 text-lg">Presentaciones profesionales de renovación</p>
         </div>
 
@@ -112,7 +112,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <p className="text-center text-olive-600 text-sm mt-6">
-          © 2024 Reforma Pro. Todos los derechos reservados.
+          © 2025 Abu24 Reportes. Todos los derechos reservados.
         </p>
       </div>
     </div>

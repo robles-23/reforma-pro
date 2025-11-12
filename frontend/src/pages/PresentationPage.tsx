@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { api } from '../lib/api';
+import { useAuthStore } from '../stores/authStore';
 import '../styles/reforma-styles.css';
 
 interface BeforeAfterSliderProps {
@@ -120,6 +121,7 @@ export default function PresentationPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showCopiedNotification, setShowCopiedNotification] = useState(false);
+  const { user, isAuthenticated } = useAuthStore();
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -442,9 +444,7 @@ export default function PresentationPage() {
             </div>
             <div className="flex items-center gap-3 no-print">
               {/* Edit button - only visible for authenticated users who own the project */}
-              {useAuthStore.getState().isAuthenticated &&
-               (useAuthStore.getState().user?.role === 'ADMIN' ||
-                useAuthStore.getState().user?.id === project?.createdByUserId) && (
+              {isAuthenticated && (user?.role === 'ADMIN' || user?.id === project?.createdByUserId) && (
                 <button
                   onClick={() => window.location.href = `/edit/${project?.id}`}
                   className="px-4 py-2 bg-olive-600 text-white border border-olive-700 hover:bg-olive-700 transition-colors flex items-center gap-2 text-sm font-medium rounded-md shadow-soft"
