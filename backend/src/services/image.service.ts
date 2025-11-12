@@ -36,7 +36,7 @@ export class ImageService {
 
       // Generate different sizes
       const [original, thumbnail, medium, full] = await Promise.all([
-        // Original (convert to WebP, compress)
+        // Original (convert to WebP, compress - NO RESIZE, keep original size)
         sharp(file.buffer)
           .webp({ quality: env.IMAGE_QUALITY })
           .toBuffer(),
@@ -53,9 +53,8 @@ export class ImageService {
           .webp({ quality: env.IMAGE_QUALITY })
           .toBuffer(),
 
-        // Full (1920px)
+        // Full (NO RESIZE - keep original dimensions)
         sharp(file.buffer)
-          .resize(env.FULL_SIZE, null, { fit: 'inside', withoutEnlargement: true })
           .webp({ quality: env.IMAGE_QUALITY })
           .toBuffer(),
       ]);
