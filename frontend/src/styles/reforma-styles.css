@@ -286,6 +286,7 @@
   line-height: 1.7;
   color: var(--color-gray);
   font-weight: 400;
+  text-align: justify;
 }
 
 .text-small {
