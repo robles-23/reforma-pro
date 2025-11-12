@@ -441,6 +441,20 @@ export default function PresentationPage() {
               />
             </div>
             <div className="flex items-center gap-3 no-print">
+              {/* Edit button - only visible for authenticated users who own the project */}
+              {useAuthStore.getState().isAuthenticated &&
+               (useAuthStore.getState().user?.role === 'ADMIN' ||
+                useAuthStore.getState().user?.id === project?.createdByUserId) && (
+                <button
+                  onClick={() => window.location.href = `/edit/${project?.id}`}
+                  className="px-4 py-2 bg-olive-600 text-white border border-olive-700 hover:bg-olive-700 transition-colors flex items-center gap-2 text-sm font-medium rounded-md shadow-soft"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                  <span>Editar</span>
+                </button>
+              )}
               <button
                 onClick={handleShareLink}
                 className="px-4 py-2 bg-white text-minimal-black border border-minimal-lightgray hover:bg-gray-50 transition-colors flex items-center gap-2 text-sm font-medium rounded-md shadow-soft"

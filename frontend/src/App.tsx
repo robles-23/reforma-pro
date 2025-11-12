@@ -5,6 +5,7 @@ import { useAuthStore } from './stores/authStore';
 import LoginPage from './pages/LoginPage';
 import UploadPage from './pages/UploadPage';
 import PresentationPage from './pages/PresentationPage';
+import EditProjectPage from './pages/EditProjectPage';
 
 function App() {
   const { isAuthenticated } = useAuthStore();
@@ -20,6 +21,10 @@ function App() {
         <Route
           path="/upload"
           element={isAuthenticated ? <UploadPage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/edit/:projectId"
+          element={isAuthenticated ? <EditProjectPage /> : <Navigate to="/login" />}
         />
 
         {/* Default Route */}
